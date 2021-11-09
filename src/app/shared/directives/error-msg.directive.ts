@@ -1,12 +1,12 @@
-import { Directive, ElementRef, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Directive({
   selector: '[error-msg]'
 })
-export class ErrorMsgDirective implements OnInit {
+export class ErrorMsgDirective implements OnInit, OnChanges {
 
-  private _color: string = 'red';
   private _mensaje: string = 'Este campo es requerido';
+  private _color: string = 'red';
 
   htmlElement: ElementRef<HTMLElement>;
 
