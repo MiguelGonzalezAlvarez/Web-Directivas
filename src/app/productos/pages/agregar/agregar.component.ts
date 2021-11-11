@@ -26,7 +26,8 @@ export class AgregarComponent {
   }
 
   cambiarColor(): void {
-    this.color = 'green';
+    const color = "#xxxxxx".replace(/x/g, y => (Math.random() * 16 | 0).toString(16));
+    this.color = color;
   }
 
 

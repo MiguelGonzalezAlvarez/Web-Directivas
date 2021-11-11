@@ -1,9 +1,9 @@
-import { Directive, ElementRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 
 @Directive({
   selector: '[error-msg]'
 })
-export class ErrorMsgDirective implements OnInit, OnChanges {
+export class ErrorMsgDirective implements OnInit {
 
   private _mensaje: string = 'Este campo es requerido';
   private _color: string = 'red';
@@ -21,6 +21,7 @@ export class ErrorMsgDirective implements OnInit, OnChanges {
   }
 
   @Input() set valido(valor: boolean) {
+    // Este htmlElement es nuestra directiva en si misma y al añadir la clase hidden la ocultamos en el padre
     if (valor) {
       this.htmlElement.nativeElement.classList.add('hidden');
     } else {
@@ -28,38 +29,28 @@ export class ErrorMsgDirective implements OnInit, OnChanges {
     }
   }
 
-  constructor(private el: ElementRef<HTMLElement>) {
-    this.htmlElement = el;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.mensaje) {
-      const mensaje = changes.mensaje.currentValue;
-      this.htmlElement.nativeElement.innerText = mensaje;
-    }
-
-    if (changes.color) {
-      const color = changes.color.currentValue;
-      this.htmlElement.nativeElement.style.color = color;
-    }
+  constructor(private myElement: ElementRef<HTMLElement>) {
+    // Inicializamos el htmlElement con la referencia de nuestra directiva por lo que nuestra directiva en si misma
+    // sera el html que se vera relacionado a ese elementRef
+    this.htmlElement = myElement;
   }
 
   ngOnInit(): void {
-    this.setEstilo();
-    this.setColor();
     this.setMensaje();
+    this.setColor();
+    this.setEstilo();
   }
 
-  setEstilo(): void {
-    this.htmlElement.nativeElement.classList.add('form-text');
+  setMensaje(): void {
+    this.htmlElement.nativeElement.innerText = this._mensaje;
   }
 
   setColor(): void {
     this.htmlElement.nativeElement.style.color = this._color;
   }
 
-  setMensaje(): void {
-    this.htmlElement.nativeElement.innerText = this._mensaje;
+  setEstilo(): void {
+    this.htmlElement.nativeElement.classList.add('form-text');
   }
 
 }
