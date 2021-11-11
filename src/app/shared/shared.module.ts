@@ -15,7 +15,8 @@ import { CustomIfDirective } from './directives/custom-if.directive';
     CommonModule
   ],
   exports: [
-    ErrorMsgDirective
+    ErrorMsgDirective,
+    CustomIfDirective
   ]
 })
 export class SharedModule { }
